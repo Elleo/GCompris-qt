@@ -21,6 +21,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import Ubuntu.Components 1.1 as UC
 import GCompris 1.0
 import QtQuick.Layouts 1.1
 import "core.js" as Core
@@ -44,42 +45,44 @@ Rectangle {
     visible: false
     title: qsTr("Configuration")
     // Put here the locales for which we have a good enough translation
-    property var languages: [
-            { "text": qsTr("Your system default"), "locale": "system" },
-            { "text": "UK English", "locale": "en_GB.UTF-8" },
-            { "text": "American English", "locale": "en_US.UTF-8" },
-            { "text": "български", "locale": "bg_BG.UTF-8" },
-            { "text": "Brezhoneg", "locale": "br_FR.UTF-8" },
-            { "text": "Català", "locale": "ca_ES.UTF-8" },
-            { "text": "Česká", "locale": "cs_CZ.UTF-8" },
-            { "text": "Dansk", "locale": "da_DK.UTF-8" },
-            { "text": "Deutsch", "locale": "de_DE.UTF-8" },
-            { "text": "Ελληνικά", "locale": "el_GR.UTF-8" },
-            { "text": "Español", "locale": "es_ES.UTF-8" },
-            { "text": "Suomi", "locale": "fi_FI.UTF-8" },
-            { "text": "Français", "locale": "fr_FR.UTF-8" },
-            { "text": "Gàidhlig", "locale": "gd_GB.UTF-8" },
-            { "text": "Galego", "locale": "gl_ES.UTF-8" },
-            { "text": "Magyar", "locale": "hu_HU.UTF-8" },
-            { "text": "Italiano", "locale": "it_IT.UTF-8" },
-            { "text": "Lietuvių", "locale": "lt_LT.UTF-8" },
-            { "text": "Latviešu", "locale": "lv_LV.UTF-8" },
-            { "text": "Nederlands", "locale": "nl_NL.UTF-8" },
-            { "text": "Norsk (nynorsk)", "locale": "nn_NO.UTF-8" },
-            { "text": "Polski", "locale": "pl_PL.UTF-8" },
-            { "text": "Português", "locale": "pt_PT.UTF-8" },
-            { "text": "Português do Brasil", "locale": "pt_BR.UTF-8" },
-            { "text": "Русский", "locale": "ru_RU.UTF-8" },
-            { "text": "Slovenský", "locale": "sk_SK.UTF-8" },
-            { "text": "Slovenski", "locale": "sl_SI.UTF-8" },
-            { "text": "црногорски jeзик", "locale": "sr_ME.UTF-8" },
-            { "text": "Svenska", "locale": "sv_FI.UTF-8" },
-            { "text": "தமிழ்", "locale": "ta_IN.UTF-8" },
-            { "text": "ไทย", "locale": "th_TH.UTF-8" },
-            { "text": "український", "locale": "uk_UA.UTF-8" },
-            { "text": "中文（简体）", "locale": "zh_CN.UTF-8" },
-            { "text": "繁體中文", "locale": "zh_TW.UTF-8" }
-        ]
+
+    ListModel {
+        id: languages
+        ListElement { text: "Your system default"; locale: "system" }
+        ListElement { text: "UK English"; locale: "en_GB.UTF-8" }
+        ListElement { text: "American English"; locale: "en_US.UTF-8" }
+        ListElement { text: "български"; locale: "bg_BG.UTF-8" }
+        ListElement { text: "Brezhoneg"; locale: "br_FR.UTF-8" }
+        ListElement { text: "Català"; locale: "ca_ES.UTF-8" }
+        ListElement { text: "Česká"; locale: "cs_CZ.UTF-8" }
+        ListElement { text: "Dansk"; locale: "da_DK.UTF-8" }
+        ListElement { text: "Deutsch"; locale: "de_DE.UTF-8" }
+        ListElement { text: "Ελληνικά"; locale: "el_GR.UTF-8" }
+        ListElement { text: "Español"; locale: "es_ES.UTF-8" }
+        ListElement { text: "Suomi"; locale: "fi_FI.UTF-8" }
+        ListElement { text: "Français"; locale: "fr_FR.UTF-8" }
+        ListElement { text: "Gàidhlig"; locale: "gd_GB.UTF-8" }
+        ListElement { text: "Galego"; locale: "gl_ES.UTF-8" }
+        ListElement { text: "Magyar"; locale: "hu_HU.UTF-8" }
+        ListElement { text: "Italiano"; locale: "it_IT.UTF-8" }
+        ListElement { text: "Lietuvių"; locale: "lt_LT.UTF-8" }
+        ListElement { text: "Latviešu"; locale: "lv_LV.UTF-8" }
+        ListElement { text: "Nederlands"; locale: "nl_NL.UTF-8" }
+        ListElement { text: "Norsk (nynorsk)"; locale: "nn_NO.UTF-8" }
+        ListElement { text: "Polski"; locale: "pl_PL.UTF-8" }
+        ListElement { text: "Português"; locale: "pt_PT.UTF-8" }
+        ListElement { text: "Português do Brasil"; locale: "pt_BR.UTF-8" }
+        ListElement { text: "Русский"; locale: "ru_RU.UTF-8" }
+        ListElement { text: "Slovenský"; locale: "sk_SK.UTF-8" }
+        ListElement { text: "Slovenski"; locale: "sl_SI.UTF-8" }
+        ListElement { text: "црногорски jeзик"; locale: "sr_ME.UTF-8" }
+        ListElement { text: "Svenska"; locale: "sv_FI.UTF-8" }
+        ListElement { text: "தமிழ்"; locale: "ta_IN.UTF-8" }
+        ListElement { text: "ไทย"; locale: "th_TH.UTF-8" }
+        ListElement { text: "український"; locale: "uk_UA.UTF-8" }
+        ListElement { text: "中文（简体）"; locale: "zh_CN.UTF-8" }
+        ListElement { text: "繁體中文"; locale: "zh_TW.UTF-8" }
+    }
 
     Row {
         spacing: 2
@@ -253,18 +256,14 @@ Rectangle {
                             }
                         }
 
-                        Row {
-                            spacing: 5
-                            ComboBox {
-                                id: fontBox
-                                style: GCComboBoxStyle {}
-                                model: fonts
-                                width: 250 * ApplicationInfo.ratio
-                            }
-                            GCText {
-                                text: qsTr("Font selector")
-                                fontSize: mediumSize
-                                wrapMode: Text.WordWrap
+                        UC.OptionSelector {
+                            text: qsTr("Font selector")
+                            id: fontBox
+                            style: GCComboBoxStyle {}
+                            model: fonts
+                            width: 300 * ApplicationInfo.ratio
+                            delegate: UC.OptionSelectorDelegate {
+                                text: model.text
                             }
                         }
                         Row {
@@ -297,21 +296,17 @@ Rectangle {
                                 onClicked: baseFontSizeSlider.value = 0.0
                             }
                         }
-                        Row {
-                            spacing: 5
-                            ComboBox {
-                                id: languageBox
-                                style: GCComboBoxStyle {}
-                                model: dialogConfig.languages
-                                width: 250 * ApplicationInfo.ratio
+                        UC.OptionSelector {
+                            id: languageBox
+                            text: qsTr("Language selector")
+                            style: GCComboBoxStyle {}
+                            model: languages
+                            width: 300 * ApplicationInfo.ratio
 
-                                onCurrentIndexChanged: voicesRow.localeChanged();
+                            delegate: UC.OptionSelectorDelegate {
+                                text: model.text
                             }
-                            GCText {
-                                text: qsTr("Language selector")
-                                fontSize: mediumSize
-                                wrapMode: Text.WordWrap
-                            }
+                            onSelectedIndexChanged: voicesRow.localeChanged();
                         }
 
                         Row {
@@ -323,11 +318,11 @@ Rectangle {
                             property bool haveLocalResource: false
 
                             function localeChanged() {
-                                var language = dialogConfig.languages[languageBox.currentIndex].text;
+                                var language = languages.get(languageBox.selectedIndex).text;
                                 voicesText.text = language;
                                 voicesRow.haveLocalResource = DownloadManager.haveLocalResource(
                                         DownloadManager.getVoicesResourceForLocale(
-                                                dialogConfig.languages[languageBox.currentIndex].locale));
+                                                languages.get(languageBox.selectedIndex).locale));
                             }
 
                             Connections {
@@ -366,7 +361,7 @@ Rectangle {
 
                                 onClicked: {
                                     if (DownloadManager.downloadResource(
-                                        DownloadManager.getVoicesResourceForLocale(dialogConfig.languages[languageBox.currentIndex].locale)))
+                                        DownloadManager.getVoicesResourceForLocale(languages.get(languageBox.selectedIndex).locale)))
                                     {
                                         var downloadDialog = Core.showDownloadDialog(dialogConfig, {});
                                     }
@@ -545,9 +540,9 @@ Rectangle {
         baseFontSize = ApplicationSettings.baseFontSize;
 
         // Set locale
-        for(var i = 0 ; i < dialogConfig.languages.length ; i ++) {
-            if(dialogConfig.languages[i].locale === ApplicationSettings.locale) {
-                languageBox.currentIndex = i;
+        for(var i = 0 ; i < languages.count ; i ++) {
+            if(languages.get(i).locale === ApplicationSettings.locale) {
+                languageBox.selectedIndex = i;
                 break;
             }
         }
@@ -555,7 +550,7 @@ Rectangle {
         // Set font
         for(var i = 0 ; i < fonts.count ; i ++) {
             if(fonts.get(i).text == ApplicationSettings.font) {
-                fontBox.currentIndex = i;
+                fontBox.selectedIndex = i;
                 break;
             }
         }
@@ -570,13 +565,13 @@ Rectangle {
         ApplicationSettings.isAutomaticDownloadsEnabled = isAutomaticDownloadsEnabled
         ApplicationSettings.sectionVisible = sectionVisible
 
-        ApplicationSettings.isEmbeddedFont = fonts.get(fontBox.currentIndex).isLocalResource;
-        ApplicationSettings.font = fonts.get(fontBox.currentIndex).text
+        ApplicationSettings.isEmbeddedFont = fonts.get(fontBox.selectedIndex).isLocalResource;
+        ApplicationSettings.font = fonts.get(fontBox.selectedIndex).text
 
         ApplicationSettings.saveBaseFontSize();
 
-        if (ApplicationSettings.locale != dialogConfig.languages[languageBox.currentIndex].locale) {
-            ApplicationSettings.locale = dialogConfig.languages[languageBox.currentIndex].locale
+        if (ApplicationSettings.locale != languages.get(languageBox.selectedIndex).locale) {
+            ApplicationSettings.locale = languages.get(languageBox.selectedIndex).locale
             if (!DownloadManager.haveLocalResource(
                     DownloadManager.getVoicesResourceForLocale(ApplicationSettings.locale)))
             {
@@ -647,10 +642,10 @@ Rectangle {
     }
 
     function hasConfigChanged() {
-        return (ApplicationSettings.locale !== dialogConfig.languages[languageBox.currentIndex].locale ||
+        return (ApplicationSettings.locale !== languages.get(languageBox.selectedIndex).locale ||
                 (ApplicationSettings.sectionVisible != sectionVisible) ||
-                (ApplicationSettings.font != fonts.get(fontBox.currentIndex).text) ||
-                (ApplicationSettings.isEmbeddedFont != fonts.get(fontBox.currentIndex).isLocalResource) ||
+                (ApplicationSettings.font != fonts.get(fontBox.selectedIndex).text) ||
+                (ApplicationSettings.isEmbeddedFont != fonts.get(fontBox.selectedIndex).isLocalResource) ||
                 (ApplicationSettings.isAudioVoicesEnabled != isAudioVoicesEnabled) ||
                 (ApplicationSettings.isAudioEffectsEnabled != isAudioEffectsEnabled) ||
                 (ApplicationSettings.isFullscreen != isFullscreen) ||
