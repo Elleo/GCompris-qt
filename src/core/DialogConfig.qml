@@ -353,6 +353,7 @@ Rectangle {
 
                             Button {
                                 id: voicesButton
+                                visible: false // can't currently load audio from qrc:// on ubuntu touch (https://bugs.launchpad.net/ubuntu/+source/qtubuntu-media/+bug/1424109)
                                 height: parent.height
                                 anchors.verticalCenter: parent.verticalCenter
                                 text: voicesRow.haveLocalResource ? qsTr("Check for updates") :

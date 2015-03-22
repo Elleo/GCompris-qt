@@ -27,9 +27,8 @@ Item {
     property bool muted
 
     property alias source: audio.source
-    property alias errorString: audio.errorString
-    property var playbackState: (audio.error == Audio.NoError) ? 
-                                    audio.playbackState : Audio.StoppedState;
+    property string errorString: "Unknown error"
+    property var playbackState: playing ? 0 : 2
     property var files: []
 
     signal error
@@ -99,21 +98,26 @@ Item {
         }
     }
 
-    Audio {
+    // Use a sound effect to avoid qtubuntu-media bug #1424109 (can't play files in qrc)
+    SoundEffect {
         id: audio
-        onError: {
-            // This file cannot be played, remove it from the source asap
-            source = ""
-            if(files.length)
-                silenceTimer.start()
-            else
-                gcaudio.error()
+        onStatusChanged: {
+            if (status == SoundEffect.Error) {
+                // This file cannot be played, remove it from the source asap
+                source = ""
+                if(files.length)
+                    silenceTimer.start()
+                else
+                    gcaudio.error()
+            }
         }
-        onStopped: {
-            if(files.length)
-                silenceTimer.start()
-            else
-                gcaudio.done()
+        onPlayingChanged: {
+            if(!playing) {
+                if(files.length)
+                    silenceTimer.start()
+                else
+                    gcaudio.done()
+            }
         }
     }
 
